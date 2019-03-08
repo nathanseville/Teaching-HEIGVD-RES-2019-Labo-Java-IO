@@ -23,12 +23,14 @@ public class DFSFileExplorer implements IFileExplorer {
     vistor.visit(rootDirectory);
 
     if(rootDirectory.isDirectory()) {
+      /* -- it visits all files in the directory -- */
       File[] files = rootDirectory.listFiles(File::isFile);
       Arrays.sort(files);
 
       for(File file : files)
-        vistor.visit(file);
+        vistor.visit(file); // <-> explore(file, visitor);
 
+      /* -- and then moves into the subdirectories. -- */
       File[] directories = rootDirectory.listFiles(File::isDirectory);
       Arrays.sort(directories);
 
