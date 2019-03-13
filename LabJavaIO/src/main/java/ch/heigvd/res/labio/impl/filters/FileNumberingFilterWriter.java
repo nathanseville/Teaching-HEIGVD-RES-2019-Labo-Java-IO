@@ -21,7 +21,7 @@ public class FileNumberingFilterWriter extends FilterWriter {
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
 
   private int line = 0;
-  private boolean[] newline = {true, true};
+  private boolean newline = false;
 
   public FileNumberingFilterWriter(Writer out) {
     super(out);
@@ -51,27 +51,37 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
   @Override
   public void write(int c) throws IOException {
-    if(c == '\n' || c == '\r') {
-      newline[0] = true;
-      newline[1] = false;
-
-      if(c == '\n') {
-        newline[1] = true;
-        super.write(c);
-      }
-    } else
-      newline[1] = true;
-
-    if(newline[0] && newline[1]) {
+    if(line == 0) {
       String str = ++line + "\t";
       super.write(str, 0, str.length());
+    }
 
-      newline[0] = false;
-
-      // si le caractere n'est pas un retour mais que newline est à true c'est la premiere ligne
-      if(c != '\n' && c != '\r')
+    switch (c) {
+      case '\r':
         super.write(c);
-    } else
-      super.write(c);
+
+        newline = true;
+        break;
+
+      case '\n':
+        super.write(c);
+        line();
+
+        newline = false;
+        break;
+
+      default:
+        if(newline) {
+          line();
+          newline = false;
+        }
+
+        super.write(c);
+    }
+  }
+
+  private void line() throws IOException{
+    String str = ++line + "\t";
+    super.write(str, 0, str.length());
   }
 }

@@ -20,9 +20,6 @@ public class DFSFileExplorer implements IFileExplorer {
 
   @Override
   public void explore(File rootDirectory, IFileVisitor vistor) {
-    if(rootDirectory == null)
-      return;
-
     vistor.visit(rootDirectory);
 
     if(rootDirectory.isDirectory()) {
@@ -33,7 +30,7 @@ public class DFSFileExplorer implements IFileExplorer {
       for (File directory : directories)
         explore(directory, vistor);
 
-      // switched two parts <> for test purposes
+      // switched two parts < > for test purposes
 
       /* -- it visits all files in the directory -- */
       File[] files = rootDirectory.listFiles(File::isFile);
