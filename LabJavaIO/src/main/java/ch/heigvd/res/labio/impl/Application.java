@@ -133,10 +133,10 @@ public class Application implements IApplication {
     Path path = Paths.get(filePath + "/" + filename);
     Files.createDirectories(path.getParent());
 
-    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(path.toFile()), "UTF-8");
+    PrintWriter pw = new PrintWriter(path.toFile(), "UTF-8");
 
-    osw.write(quote.getQuote());
-    osw.close();
+    pw.write(quote.getQuote());
+    pw.close();
   }
   
   /**

@@ -57,7 +57,6 @@ public abstract class FileTransformer implements IFileVisitor {
         writer.write(read);
       
       reader.close();
-      writer.flush();
       writer.close();
     } catch (IOException ex) {
       LOG.log(Level.SEVERE, null, ex);

@@ -25,15 +25,14 @@ public class Utils {
     Pattern pattern = Pattern.compile("\r\n|\r|\n");
     Matcher matcher = pattern.matcher(lines);
 
-    String[] output = new String[2];
+    String[] output = {"", ""};
 
     if(matcher.find()) {
       output[0] = lines.substring(0, matcher.end());
       output[1] = lines.substring(matcher.end());
-    } else {
-      output[0] = "";
+    } else
       output[1] = lines;
-    }
+
 
 
     return output;
